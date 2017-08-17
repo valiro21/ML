@@ -1,0 +1,2 @@
+from Core.Functions import Functions, FunctionsDerivative
+from Core.FeedforwardNeuralNetwork.FeedforwardNeuralNetwork import FeedforwardNeuralNetwork
