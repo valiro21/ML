@@ -1,5 +1,6 @@
 from Core import FeedforwardNeuralNetwork, Functions, FunctionsDerivative
 import os
+import argcheck
 
 def read_input(input_reader):
     input = input_reader.read(28 * 28)
@@ -42,7 +43,9 @@ def read_dataset(input_file, output_file):
     return dataset
 
 
-def run():
+def run(threads=1):
+    argcheck.throw_on_non_positive(threads, "threads")    
+
     file_path = os.path.dirname(os.path.realpath(__file__))
     learn_dataset = read_dataset(os.path.join(file_path, "./datasets/digits-dataset/train-images-idx3-ubyte"),
                                  os.path.join(file_path,"./datasets/digits-dataset/train-labels-idx1-ubyte"))
@@ -58,4 +61,7 @@ def run():
                                         activation_function_derivative=FunctionsDerivative.sigmoid,
                                         cost_function_derivative=FunctionsDerivative.mse_by_activation_derivative)
 
-    n.epoch_learn(30, 10, 0.01, [], learn_dataset, validation_dataset, output_function=Functions.first_max_neuron, threads=3)
+    n.epoch_learn(30, 10, 0.01, [], learn_dataset, validation_dataset, output_function=Functions.first_max_neuron, threads=threads)
+
+if __name__ == '__main__':
+    run(threads=2)

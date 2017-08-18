@@ -3,4 +3,4 @@
 from AI import DigitsRecognizer
 
 if __name__ == "__main__":
-    DigitsRecognizer.run()
+    DigitsRecognizer.run(threads=4)
