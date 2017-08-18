@@ -1,5 +1,5 @@
 from Core import FeedforwardNeuralNetwork, Functions, FunctionsDerivative
-
+import os
 
 def read_input(input_reader):
     input = input_reader.read(28 * 28)
@@ -42,11 +42,12 @@ def read_dataset(input_file, output_file):
     return dataset
 
 
-if __name__ == "__main__":
-    learn_dataset = read_dataset("./datasets/digits-dataset/train-images-idx3-ubyte",
-                                 "./datasets/digits-dataset/train-labels-idx1-ubyte")
-    validation_dataset = read_dataset("./datasets/digits-dataset/t10k-images-idx3-ubyte",
-                                      "./datasets/digits-dataset/t10k-labels-idx1-ubyte")
+def run():
+    file_path = os.path.dirname(os.path.realpath(__file__))
+    learn_dataset = read_dataset(os.path.join(file_path, "./datasets/digits-dataset/train-images-idx3-ubyte"),
+                                 os.path.join(file_path,"./datasets/digits-dataset/train-labels-idx1-ubyte"))
+    validation_dataset = read_dataset(os.path.join(file_path,"./datasets/digits-dataset/t10k-images-idx3-ubyte"),
+                                      os.path.join(file_path,"./datasets/digits-dataset/t10k-labels-idx1-ubyte"))
 
     print("Finished reading dataset!")
 
