@@ -5,8 +5,8 @@ from copy import deepcopy
 
 import numpy
 
-import argcheck
-from Core import Functions
+from ML.Common import argcheck
+from ML.Core import Functions
 
 
 class FeedforwardNeuralNetwork(object):

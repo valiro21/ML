@@ -1,6 +1,6 @@
-from Core import FeedforwardNeuralNetwork, Functions, FunctionsDerivative
+from ML.Core import FeedforwardNeuralNetwork, Functions, FunctionsDerivative
 import os
-import argcheck
+from ML.Common import argcheck
 
 def read_input(input_reader):
     input = input_reader.read(28 * 28)

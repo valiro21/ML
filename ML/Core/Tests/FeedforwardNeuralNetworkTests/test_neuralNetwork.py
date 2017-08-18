@@ -2,7 +2,7 @@ import multiprocessing
 from unittest import TestCase
 
 import numpy
-from Core import Functions, FunctionsDerivative, FeedforwardNeuralNetwork
+from ML.Core import Functions, FunctionsDerivative, FeedforwardNeuralNetwork
 
 def testAlmostEquals(l1, l2):
     if len(l1) != len(l2):
