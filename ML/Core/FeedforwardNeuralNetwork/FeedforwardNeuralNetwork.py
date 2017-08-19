@@ -91,12 +91,15 @@ class FeedforwardNeuralNetwork(object):
         """
         argcheck.throw_on_non_iterable(input, "input")
 
-        activations = numpy.array(input)
+        activation = numpy.array(input)
         self.activations = []
+        self.Z = []
         for biases, weights in zip(self.biases, self.weights):
-            self.activations.append(activations)
-            activations = self.activation_function(numpy.dot(weights, activations) + biases)
-        return activations
+            self.activations.append(activation)
+            z = numpy.dot(weights, activation) + biases
+            self.Z.append(z)
+            activation = self.activation_function(z)
+        return activation
 
     def _single_test_backpropagate(self, input, correct_output):
         """
@@ -105,14 +108,17 @@ class FeedforwardNeuralNetwork(object):
         :param correct_output: The output that the network is supposed to compute.
         """
         output = self.feedforward(input)
-        dz = self.cost_function_derivative(output, correct_output, self.activation_function_derivative)
+        dz = self.cost_function_derivative(output, correct_output, self.Z[-1], self.activation_function_derivative)
 
         for i in range(len(self.weights)):
             activations = self.activations[-i - 1]
+
             weights_gradient = numpy.multiply(numpy.transpose([dz]), activations)
             self.dws[-i - 1] = numpy.add(self.dws[-i - 1], weights_gradient)
             self.dbs[-i - 1] = numpy.add(self.dbs[-i - 1], dz)
-            dz = numpy.dot(dz, numpy.dot(self.weights[-i - 1], self.activation_function_derivative(activations)))
+            if i < len(self.weights) - 1:
+                z = self.Z[-i-2]
+                dz = numpy.dot(dz, numpy.dot(self.weights[-i - 1], self.activation_function_derivative(z)))
 
     def backpropagate(self, mini_batch_dataset, threads=1):
         """

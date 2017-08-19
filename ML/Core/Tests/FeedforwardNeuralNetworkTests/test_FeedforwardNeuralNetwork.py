@@ -1,6 +1,7 @@
 import multiprocessing
 from unittest import TestCase
 
+import unittest
 import numpy
 from ML.Core import Functions, FunctionsDerivative, FeedforwardNeuralNetwork
 
@@ -89,10 +90,9 @@ class TestFeedforwardNeuralNetwork(TestCase):
                                      cost_function_derivative=FunctionsDerivative.mse_by_activation_derivative)
         weights_gradient_network, biases_gradient_network = n.backpropagate([(input, correct_output)], 1)
 
-
-        weights_gradient = [[[-0.12128892408755970, -0.045483346532834888]],
-                            [[-0.038824925911934149], [0.0045674533667444924]]]
-        biases_gradient = [[-0.015161115510944963], [-0.039034865064649663, 0.0045921510903681505]]
+        weights_gradient = [[[-0.0018238083754, -0.000683928140774]],
+                            [[-0.0273804089663], [0.000329481705805]]]
+        biases_gradient = [[-0.000227976046925], [-0.0275284638492, 0.00033126332183]]
 
         weights_gradient_network = [weights.tolist() for weights in weights_gradient_network]
         biases_gradient_network = [biases.flatten().tolist() for biases in biases_gradient_network]
@@ -114,9 +114,9 @@ class TestFeedforwardNeuralNetwork(TestCase):
                                      cost_function_derivative=FunctionsDerivative.mse_by_activation_derivative)
         weights_gradient_network, biases_gradient_network = n.backpropagate([(input, correct_output), (input, correct_output)], 1)
 
-        weights_gradient = [[[-0.12128892408755970, -0.045483346532834888]],
-                            [[-0.038824925911934149], [0.0045674533667444924]]]
-        biases_gradient = [[-0.015161115510944963], [-0.039034865064649663, 0.0045921510903681505]]
+        weights_gradient = [[[-0.0018238083754, -0.000683928140774]],
+                            [[-0.0273804089663], [0.000329481705805]]]
+        biases_gradient = [[-0.000227976046925], [-0.0275284638492, 0.00033126332183]]
 
         weights_gradient_network = [weights.tolist() for weights in weights_gradient_network]
         biases_gradient_network = [biases.flatten().tolist() for biases in biases_gradient_network]
@@ -135,7 +135,7 @@ class TestFeedforwardNeuralNetwork(TestCase):
         learn_dataset = read_iris_dataset("IntegrationDataset/bezdekIris.data")
         validation_dataset = read_iris_dataset("IntegrationDataset/iris.data")
 
-        n.epoch_learn(5, 10, 0.5, [], learn_dataset, [])
+        n.epoch_learn(5, 10, 1, [], learn_dataset, [])
 
         success_rate = n.get_success_rate(validation_dataset, output_function=Functions.first_max_neuron)
         self.assertGreater(success_rate, 90.0)
@@ -151,7 +151,7 @@ class TestFeedforwardNeuralNetwork(TestCase):
         learn_dataset = read_iris_dataset("IntegrationDataset/bezdekIris.data")
         validation_dataset = read_iris_dataset("IntegrationDataset/iris.data")
 
-        n.epoch_learn(5, 10, 0.5, [], learn_dataset, [], threads=multiprocessing.cpu_count())
+        n.epoch_learn(5, 10, 1, [], learn_dataset, [], threads=multiprocessing.cpu_count())
 
         success_rate = n.get_success_rate(validation_dataset, output_function=Functions.first_max_neuron)
         self.assertGreater(success_rate, 90.0)
@@ -167,7 +167,10 @@ class TestFeedforwardNeuralNetwork(TestCase):
         learn_dataset = read_iris_dataset("IntegrationDataset/bezdekIris.data")
         validation_dataset = read_iris_dataset("IntegrationDataset/iris.data")
 
-        n.epoch_learn(5, 10, 0.5, [], learn_dataset, [], threads=multiprocessing.cpu_count())
+        n.epoch_learn(5, 10, 1, [], learn_dataset, [], threads=multiprocessing.cpu_count())
 
         success_rate = n.get_success_rate(validation_dataset, output_function=Functions.first_max_neuron)
         self.assertGreater(success_rate, 90.0)
+
+if __name__ == '__main__':
+    unittest.main()

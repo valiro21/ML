@@ -17,4 +17,4 @@ class Functions:
 
 class FunctionsDerivative:
     sigmoid = lambda x: -(Functions.sigmoid(x) - 1) * Functions.sigmoid(x)
-    mse_by_activation_derivative = lambda a, y, activation_derivative: (a - y) * activation_derivative(a)
+    mse_by_activation_derivative = lambda a, y, z, activation_derivative: (a - y) * activation_derivative(z)
