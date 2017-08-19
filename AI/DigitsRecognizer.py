@@ -61,7 +61,16 @@ def run(threads=1):
                                         activation_function_derivative=FunctionsDerivative.sigmoid,
                                         cost_function_derivative=FunctionsDerivative.mse_by_activation_derivative)
 
-    n.epoch_learn(30, 10, 0.01, [], learn_dataset, validation_dataset, output_function=Functions.first_max_neuron, threads=threads)
+    n.epoch_learn(number_of_epoch=30, 
+                  mini_batch_size=10, 
+                  starting_learning_rate=0.1, 
+                  learning_rate_changes=[], 
+                  training_dataset=learn_dataset, 
+                  validation_dataset=validation_dataset, 
+                  output_function=Functions.first_max_neuron, 
+                  threads=threads,
+                  log_training_rate=True,
+                  predict_next_training_rate=True)
 
 if __name__ == '__main__':
-    run(threads=2)
+    run(threads=3)
